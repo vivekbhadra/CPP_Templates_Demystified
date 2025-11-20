@@ -22,7 +22,6 @@ int main()
     std::vector<int> data_store;
     int val = 10;
     add_to_store(data_store, val);
-
     return 0;
 }
 
