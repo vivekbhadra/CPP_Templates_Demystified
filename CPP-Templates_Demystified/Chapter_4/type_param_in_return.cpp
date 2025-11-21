@@ -9,16 +9,18 @@
 \*************************************************************************/
 
 #include <iostream>
+
 template<typename T>
 T increment(T& x)
 {
     return ++x;
 }
+
 int main()
 {
     double dval = 10.5;
-    std::cout << "double incr = " << increment(dval) << std::endl;
+    std::cout << "double incr = " << **increment**(dval) << "\n";
     int ival = 20;
-    std::cout << "int incr = " << increment(ival) << std::endl;
+    std::cout << "int incr = " << **increment**(ival) << "\n";
     return 0;
 }
