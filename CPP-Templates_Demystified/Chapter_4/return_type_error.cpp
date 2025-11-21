@@ -9,6 +9,7 @@
 \*************************************************************************/
 
 #include <iostream>
+
 template<typename T>
 T largest_elem(const T number_set, size_t len)
 {
@@ -21,8 +22,10 @@ T largest_elem(const T number_set, size_t len)
 
 int main()
 {
-    double numbers[] = {20.1, 10.1, 30.1, 5.1, 40.1, 200.1, 50.1, 1.1, 0.5, 100.5};
+    double numbers[] = {20.1, 10.1, 30.1, 5.1, 40.1, 200.1, 50.1, 1.1,
+                        0.5, 100.5};
+
     double l = largest_elem(numbers, 10);
-    std::cout << "largest = " << l << std::endl;
+    std::cout << "largest = " << l << "\n";
     return 0;
 }
