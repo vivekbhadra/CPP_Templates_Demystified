@@ -9,19 +9,24 @@
 \*************************************************************************/
 
 #include <iostream>
-#include <string.h>
+#include <cstring>
 
+// name represents a fixed memory location known at link time
 char name[256];
-template<char * str>
+
+template<char* str>
 void print_str()
 {
-    std::cout << str << std::endl;
+    // The compiler treats 'str' as a literal constant address
+    std::cout << str << "\n";
 }
 
 int main()
 {
-    strcpy(name, "Hello World");
+    std::strcpy(name, "Hello World");
+    
+    // Valid: 'name' is a constant address known to the linker
     print_str<name>();
-
+    
     return 0;
 }
