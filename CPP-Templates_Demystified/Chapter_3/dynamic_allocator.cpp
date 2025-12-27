@@ -9,40 +9,27 @@
 \*************************************************************************/
 
 #include <iostream>
-#include <string.h>
-template<typename T>
-T* dynamic_allocator(T val, const size_t N)
-{
-    T *mem = new T[N];
-    for (size_t index = 0; index < N; ++index)
-        mem[index] = val;
+#include <vector>
+#include <array>  // For NTTP version later
 
-    return mem;
+// HAL: Initialize sensor reading buffer (BAE/MBDA style)
+template<typename SensorData>
+std::vector<SensorData> init_sensor_buffer(SensorData initial_reading, size_t buffer_size) {
+    return std::vector<SensorData>(buffer_size, initial_reading);
 }
 
-int main()
-{
-    size_t len = 0;
-    len = 10;
-    auto iptr = dynamic_allocator(5, len);
-    for (size_t index = 0; index < len; ++index)
-        std::cout << iptr[index] << " ";
-    std::cout << "\n";
-    
-    len = 5;
-    auto dptr = dynamic_allocator(20.7, len);    
-    for (size_t index = 0; index < len; ++index)
-        std::cout << dptr[index] << " ";
-    std::cout << "\n";
+int main() {
+    // Temperature sensor (float)
+    auto temp_buffer = init_sensor_buffer(25.0f, 100);
+    std::cout << "Temp buffer[0]: " << temp_buffer[0] << "\n";
 
-    len = 3;
-    auto cptr = dynamic_allocator('C', len);
-    for (size_t index = 0; index < len; ++index)
-        std::cout << cptr[index] << std::endl;
+    // Pressure sensor (int16_t)  
+    auto pressure_buffer = init_sensor_buffer(int16_t{1013}, 50);
+    std::cout << "Pressure buffer[0]: " << pressure_buffer[0] << "\n";
 
-    delete [] iptr;
-    delete [] dptr;
-    delete [] cptr;
+    // Status flags (bool)
+    auto status_buffer = init_sensor_buffer(false, 8);
+    std::cout << "Status buffer[0]: " << status_buffer[0] << "\n";
 
-    return 0;
+    return 0;  // Auto cleanup
 }
