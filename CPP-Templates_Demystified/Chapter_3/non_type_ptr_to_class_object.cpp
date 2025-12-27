@@ -9,20 +9,26 @@
 \*************************************************************************/
 
 #include <iostream>
+
 class A {
 public:
-    void welcome() {std::cout << "Hello World" << "\n";}
+    void welcome() { std::cout << "Hello World\n"; }
 };
+
+// Global object has external linkage and a fixed identity
 class A obj_A;
 
-template<class A * str>
-void print_str()
+template<class A* ptr>
+void execute_welcome()
 {
-    str->welcome();
+    // Compiler treats 'ptr' as a constant memory address
+    ptr->welcome();
 }
+
 int main()
 {
-    print_str<&obj_A>();
+    // Valid: The address of obj_A is a link time constant
+    execute_welcome<&obj_A>();
 
     return 0;
 }
