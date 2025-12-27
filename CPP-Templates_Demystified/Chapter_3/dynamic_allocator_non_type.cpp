@@ -9,36 +9,30 @@
 \*************************************************************************/
 
 #include <iostream>
-#include <string.h>
-template<size_t N, typename T>
-T* dynamic_allocator(T val)
-{
-    std::cout << "Value of N = " << N << std::endl;
-    T *mem = new T[N];
-    for (size_t index = 0; index < N; ++index)
-        mem[index] = val;
-    return mem;
+#include <array>
+
+// HAL: Fixed-size sensor buffer (compile-time size)
+template<size_t BufferSize, typename SensorData>
+std::array<SensorData, BufferSize> init_fixed_sensor_buffer(SensorData initial_reading) {
+    std::cout << "BufferSize = " << BufferSize << std::endl;
+    return std::array<SensorData, BufferSize>{initial_reading};
 }
-int main()
-{
-    const size_t len = 10;
-    auto iptr = dynamic_allocator<len>(5);
-    for (size_t index = 0; index < len; ++index)
-        std::cout << iptr[index] << " ";
+
+int main() {
+    constexpr size_t len = 10;
+    auto temp_buffer = init_fixed_sensor_buffer<len>(25.0f);  // float, N=10
+    for (auto val : temp_buffer) std::cout << val << " ";
     std::cout << "\n";
 
-    auto dptr = dynamic_allocator<5>(20.7);
-    for (size_t index = 0; index < 5; ++index)
-        std::cout << dptr[index] << " ";
+    auto pressure_buffer = init_fixed_sensor_buffer<50>(int16_t{1013});  // int16_t, N=50
+    for (auto val : pressure_buffer) std::cout << val << " ";
     std::cout << "\n";
 
-    const size_t len3 = 3;
-    auto cptr = dynamic_allocator<len3>('C');
-    for (size_t index = 0; index < len3; ++index)
-        std::cout << cptr[index] << " ";
+    constexpr size_t len3 = 8;
+    auto status_buffer = init_fixed_sensor_buffer<len3>(false);  // bool, N=8
+    for (auto val : status_buffer) std::cout << val << " ";
     std::cout << "\n";
-    delete [] iptr;
-    delete [] dptr;
-    delete [] cptr;
+
+    // No manual cleanup - std::array RAII
     return 0;
 }
