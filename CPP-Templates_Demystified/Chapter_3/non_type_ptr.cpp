@@ -9,19 +9,30 @@
 \*************************************************************************/
 
 #include <iostream>
-#include <string.h>
-#include <malloc.h>
-char *ptr;
-template<char * str>
+#include <cstring>
+#include <cstdlib>
+
+// ptr is a variable; the address it holds can change at runtime
+char* ptr;
+
+template<char* str>
 void print_str()
 {
-    std::cout << str << std::endl;
+    // In a valid template, str would be a constant address
+    std::cout << str << "\n";
 }
+
 int main()
 {
-    ptr = (char *) malloc(256 * sizeof(char));
-    strcpy(ptr, "Hello World");
-    print_str<ptr>();
-
+    // The address held by ptr is determined at runtime via malloc
+    ptr = static_cast<char*>(std::malloc(32));
+    if (ptr) {
+        std::strcpy(ptr, "Hello World");
+        
+        // Compilation Error: 'ptr' is a variable, not a constant address
+        // print_str<ptr>(); 
+        
+        std::free(ptr);
+    }
     return 0;
 }
