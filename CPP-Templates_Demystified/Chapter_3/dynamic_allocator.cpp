@@ -12,7 +12,7 @@
 #include <vector>
 #include <array>  // For NTTP version later
 
-// HAL: Initialize sensor reading buffer (BAE/MBDA style)
+// HAL: Initialize sensor reading buffer
 template<typename SensorData>
 std::vector<SensorData> init_sensor_buffer(SensorData initial_reading, size_t buffer_size) {
     return std::vector<SensorData>(buffer_size, initial_reading);
